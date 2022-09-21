@@ -165,6 +165,20 @@ bool search_value(struct Node* head, int x)
     return false;
 }
 
+void print(struct Node* head)
+{
+    if (head == NULL) {
+        printf("Empty linked list \n");
+        return;
+    }
+    struct Node* temp = head;
+    printf("\n Linked List : ");
+    while (temp != NULL) {
+        printf("  %d", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
 
 int main()
 {
@@ -188,8 +202,9 @@ int main()
         for (int i = 0; i < number_of_elements; i++){
                 int data;
                 scanf("%d", &data);
-                append(&head, data);
-        }
+                append(&head, data); }
+        printf("Here is your list: ");
+        print(head);
     break;
     case 2:
         printf("you can try something from here or exit bu typing 0");
@@ -210,7 +225,7 @@ int main()
         printf(" \n |7. Search for a value                                                |");
         printf(" \n |8.Join two linked list                                               |");
         printf(" \n |9.Backwards traversal                                                |");
-        printf(" \n |0.Exit the program                                                  |");
+        printf(" \n |0.Exit the program                                                   |");
         printf(" \n _______________________________________________________________________ \n");
 
         printf(" \n\n\nChoose an option: ");
@@ -223,37 +238,43 @@ int main()
                 int data;
                 scanf("%d", &data);
                 append(&head, data);
-
+                print(head);
                 break;
            }
            case 2: {
                 int data;
                 scanf("%d", &data);
                 prepend(&head, data);
+                print(head);
                 break;
            }
 
            case 3: {
            //reverse the list
                 reverse(&head);
+                print(head);
            break;
            }
            case 4:
            //add value to a specific index
                 insert(&head);
+                print(head);
            break;
 
            case 5:
            //add value to a specific index
                 remove_value(&head);
+                print(head);
            break;
 
            case 6:
            //sorting with re-arranging the cells
                 sort();
+                print(head);
            break;
 
             case 7:{
+                //search for a value inside the list
                 int data;
                 scanf("%d", &data);
                 if (search_value(head, data)) {
@@ -261,10 +282,9 @@ int main()
                 else {
                 printf("No"); }
                 printf("\n");
-
+                print(head);
                 break;
             }
-
 
            case 0:
            printf(" \n Program had been stoped. ");
