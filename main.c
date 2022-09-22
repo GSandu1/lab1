@@ -238,63 +238,6 @@ int main()
         break;
     }
 
-    //Double linked list
-    struct doublyNode
-    {
-    int doublyData;
-    struct doublyNode *doublyNext;
-    struct doublyNode *doublyPrev;
-    };
-struct doublyNode *doublyHead;
-
-// Doubly Linked List functions:
-void appendDoubly(int item)
-{
-    struct doublyNode *ptr, *last;
-    ptr = (struct doublyNode *)malloc(sizeof(struct doublyNode));
-    last = doublyHead;
-    ptr->doublyData = item;
-    ptr->doublyNext = NULL;
-
-    if (doublyHead == NULL)
-    {
-        ptr->doublyPrev = NULL;
-        doublyHead = ptr;
-        return;
-    }
-    while (last->doublyNext != NULL)
-    {
-        last = last->doublyNext;
-    }
-    last->doublyNext = ptr;
-    ptr->doublyPrev = last;
-    return;
-}
-void backwardsPrint()
-{
-    struct doublyNode *tail;
-    tail = doublyHead;
-    while (tail->doublyNext != NULL)
-    {
-        tail = tail->doublyNext;
-    }
-    while (tail != doublyHead)
-    {
-        printf("%d ", tail->doublyData);
-        tail = tail->doublyPrev;
-    }
-    printf("%d\n", tail->doublyData);
-}
-void deleteAllDoublyNodes()
-{
-    struct doublyNode *temp;
-    while (doublyHead != NULL)
-    {
-        temp = doublyHead;
-        doublyHead = doublyHead->doublyNext;
-        free(temp);
-    }
-}
 
     while(exit == 0) {
         printf(" \n _______________________________  Meniu  _______________________________ \n");
