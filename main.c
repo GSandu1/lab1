@@ -104,7 +104,7 @@ void insert(struct Node** head){
 void remove_value(struct Node** head){
     //UI
     int pos;
-    printf("type the position of the node to delete: ");
+    printf("type the position of the node to remove: ");
     printf(" > ");
     scanf("%d", &pos);
 
@@ -168,7 +168,7 @@ bool search_value(struct Node* head, int x)
 void print(struct Node* head)
 {
     if (head == NULL) {
-        printf("Empty linked list \n");
+        printf("No Elements in the list \n");
         return;
     }
     struct Node* temp = head;
@@ -180,7 +180,32 @@ void print(struct Node* head)
     printf("\n");
 }
 
+void serialize(struct Node* root) {
+    FILE* file = fopen("data.txt", "w");
+    if (file == NULL) {
+        exit(1);
+    }
+
+    for (struct Node* curr = root; curr != NULL; curr = curr->next) {
+        fprintf(file, "%d, ", curr->data);
+    }
+    fclose(file);
+}
+
+void deserialize(struct Node** root) {
+    FILE* file = fopen("data.txt", "r");
+    if (file == NULL) {
+        exit(2);
+    }
+
+    int val;
+    while(fscanf(file, "%d, ", &val) > 0) {
+        append(root, val);
+    }
+    fclose(file);
+}
 int main()
+
 {
 
     struct Node* head = NULL;
@@ -213,6 +238,63 @@ int main()
         break;
     }
 
+    //Double linked list
+    struct doublyNode
+    {
+    int doublyData;
+    struct doublyNode *doublyNext;
+    struct doublyNode *doublyPrev;
+    };
+struct doublyNode *doublyHead;
+
+// Doubly Linked List functions:
+void appendDoubly(int item)
+{
+    struct doublyNode *ptr, *last;
+    ptr = (struct doublyNode *)malloc(sizeof(struct doublyNode));
+    last = doublyHead;
+    ptr->doublyData = item;
+    ptr->doublyNext = NULL;
+
+    if (doublyHead == NULL)
+    {
+        ptr->doublyPrev = NULL;
+        doublyHead = ptr;
+        return;
+    }
+    while (last->doublyNext != NULL)
+    {
+        last = last->doublyNext;
+    }
+    last->doublyNext = ptr;
+    ptr->doublyPrev = last;
+    return;
+}
+void backwardsPrint()
+{
+    struct doublyNode *tail;
+    tail = doublyHead;
+    while (tail->doublyNext != NULL)
+    {
+        tail = tail->doublyNext;
+    }
+    while (tail != doublyHead)
+    {
+        printf("%d ", tail->doublyData);
+        tail = tail->doublyPrev;
+    }
+    printf("%d\n", tail->doublyData);
+}
+void deleteAllDoublyNodes()
+{
+    struct doublyNode *temp;
+    while (doublyHead != NULL)
+    {
+        temp = doublyHead;
+        doublyHead = doublyHead->doublyNext;
+        free(temp);
+    }
+}
 
     while(exit == 0) {
         printf(" \n _______________________________  Meniu  _______________________________ \n");
@@ -223,8 +305,8 @@ int main()
         printf(" \n |5. Remove a value to the specific index                              |");
         printf(" \n |6. Sort the linked lis, with re-arranging the cells                  |");
         printf(" \n |7. Search for a value                                                |");
-        printf(" \n |8.Join two linked list                                               |");
-        printf(" \n |9.Backwards traversal                                                |");
+        printf(" \n |8.Serialize                                                          |");
+        printf(" \n |9.Deserialize                                                        |");
         printf(" \n |0.Exit the program                                                   |");
         printf(" \n _______________________________________________________________________ \n");
 
@@ -255,23 +337,23 @@ int main()
                 print(head);
            break;
            }
-           case 4:
+           case 4: {
            //add value to a specific index
                 insert(&head);
                 print(head);
-           break;
+           }break;
 
-           case 5:
+           case 5:{
            //add value to a specific index
                 remove_value(&head);
                 print(head);
-           break;
+            }break;
 
-           case 6:
+           case 6:{
            //sorting with re-arranging the cells
                 sort();
                 print(head);
-           break;
+            }break;
 
             case 7:{
                 //search for a value inside the list
@@ -286,10 +368,21 @@ int main()
                 break;
             }
 
-           case 0:
+            case 8: {
+                serialize(head);
+                print(head);
+                 }break;
+
+            case 9:{
+                deserialize(&head);
+                print(head);
+                }break;
+
+
+           case 0:{
            printf(" \n Program had been stoped. ");
            exit=1;
-           break;
+           }break;
 
 
            default:
